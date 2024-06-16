@@ -82,7 +82,6 @@ function CarouselModal({ shadowRoot }: CarouselModalProps) {
 
   const nextVideo = () => {
     if (currentVideoIndex < videos.length - 1) {
-      videoRef.current?.pause();
       progressSpring.set(0);
       setCurrentVideoIndex((prevIndex) => prevIndex + 1);
       setCurrentProductIndex(0);
