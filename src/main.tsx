@@ -9,6 +9,7 @@ import styles from "./styles";
 import { CarouselModalProps } from "./type";
 
 function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
+  console.log("IM A MODAL");
   const [isOpen, setIsOpen] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
@@ -151,16 +152,19 @@ class CachaiStoriesWC extends HTMLElement {
     );
     const videos = await response.json();
 
+    console.log({ videos });
     if (!videos.length) return null;
     const shadowRoot = this.shadowRoot!;
     const mountPoint = shadowRoot.querySelector("#cachai-wc");
     if (mountPoint) {
       const root = createRoot(mountPoint);
+      console.log("renderizando modal");
       root.render(<CarouselModal shadowRoot={shadowRoot} videos={videos} />);
     }
   };
 
   connectedCallback() {
+    console.log("CONECTANDO");
     const shadowRoot = this.attachShadow({ mode: "open" });
     const mountPoint = document.createElement("div");
     mountPoint.id = "cachai-wc";
