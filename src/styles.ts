@@ -1,4 +1,6 @@
 export default `
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
 .open-stories-button {
   position: fixed;
   bottom: 20px;
@@ -9,6 +11,7 @@ export default `
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-family: 'Roboto', sans-serif;
 }
 .modal-overlay {
   position: fixed;
@@ -20,16 +23,18 @@ export default `
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 99999;
 }
 
 .modal-content {
   border-radius: 8px;
   position: relative;
-  width: 320px; /* Set a fixed width */
-  height: 576px; /* Set a fixed height */
+  width: auto;
+  height: auto;
+  aspect-ratio: 608 / 1080;
   max-height: 90%;
   overflow: hidden;
+  font-family: 'Roboto', sans-serif;
 }
 
 .close-modal-button {
@@ -70,7 +75,7 @@ video {
 
 .products-container {
   position: absolute;
-  bottom: 40px;
+  bottom: 60px;
   left: 10px;
   display: flex;
   flex-direction: column;
@@ -114,8 +119,23 @@ video {
   right: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: white;
   z-index: 3;
+  min-height: 32px;
+}
+
+.product-name {
+  font-weight: 500;
+  font-size: 14px;
+  max-width: 70%;
+  line-height: 1.2;
+}
+
+.product-price {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.2;
 }
 
 .backdrop {

@@ -112,7 +112,6 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   onEnded={nextVideo}
                   poster={currentVideo.poster}
                   onTimeUpdate={handleTimeUpdate}
-                  style={{ width: 320, height: 576 }}
                 />
                 <div className="products-container">
                   {currentVideo.products.map((product, index) => (
@@ -130,8 +129,10 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   ))}
                 </div>
                 <div className="current-product-details">
-                  <span>{currentProduct.name}</span>
-                  <span>{currentProduct.price}</span>
+                  <span className="product-name">{currentProduct.name}</span>
+                  <span className="product-price">
+                    ${currentProduct.price} {currentProduct.currency}
+                  </span>
                 </div>
               </div>
               <div className="backdrop" />
