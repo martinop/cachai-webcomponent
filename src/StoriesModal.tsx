@@ -81,11 +81,11 @@ function CarouselModal({ shadowRoot }: CarouselModalProps) {
   };
 
   const nextVideo = () => {
-    if (currentVideoIndex < videos.length - 1) {
-      progressSpring.set(0);
-      setCurrentVideoIndex((prevIndex) => prevIndex + 1);
-      setCurrentProductIndex(0);
-    }
+    progressSpring.jump(0);
+    setCurrentVideoIndex((prevIndex) =>
+      Math.min(prevIndex + 1, videos.length - 1)
+    );
+    setCurrentProductIndex(0);
   };
 
   const currentVideo = videos[currentVideoIndex];
