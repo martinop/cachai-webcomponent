@@ -104,8 +104,8 @@ function CarouselModal({ shadowRoot }: CarouselModalProps) {
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.currentTime = 0;
       videoRef.current.src = videos[currentVideoIndex].src;
+      videoRef.current.currentTime = 0;
     }
   }, [currentVideoIndex]);
 
