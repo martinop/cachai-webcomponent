@@ -1,7 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useState, useEffect, useRef } from "react";
 import cx from "classnames";
-import { motion, useSpring, useTransform } from "framer-motion";
+import {
+  AnimatePresence,
+  motion,
+  useSpring,
+  useTransform,
+} from "framer-motion";
 
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
@@ -9,7 +14,6 @@ import styles from "./styles";
 import { CarouselModalProps } from "./type";
 
 function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
-  console.log("IM A MODAL");
   const [isOpen, setIsOpen] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
@@ -57,9 +61,19 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
 
   return (
     <>
-      <button className="open-stories-button" onClick={() => setIsOpen(true)}>
-        Abrir
-      </button>
+      {!isOpen && (
+        <button className="open-stories-button" onClick={() => setIsOpen(true)}>
+          <video
+            src={videos?.[0]?.src}
+            poster={videos?.[0]?.poster}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        </button>
+      )}
+
       {isOpen &&
         createPortal(
           <motion.div
@@ -113,29 +127,48 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   poster={currentVideo.poster}
                   onTimeUpdate={handleTimeUpdate}
                 />
-                <div className="products-container">
-                  {currentVideo.products.map((product, index) => (
-                    <a
-                      key={product.id}
-                      href={product.url}
-                      target="_blank"
-                      className={cx(
-                        "product",
-                        index === currentProductIndex && "active"
-                      )}
-                    >
-                      <img src={product.image} alt={product.name} />
-                    </a>
-                  ))}
-                </div>
-                <div className="current-product-details">
-                  <span className="product-name">{currentProduct.name}</span>
-                  <span className="product-price">
-                    ${currentProduct.price} {currentProduct.currency}
-                  </span>
-                </div>
+                {currentVideo.products.length > 1 && (
+                  <div className="products-container">
+                    {currentVideo.products.map((product, index) => (
+                      <a
+                        key={product.id}
+                        href={product.url}
+                        target="_blank"
+                        className={cx(
+                          "product",
+                          index === currentProductIndex && "active"
+                        )}
+                      >
+                        <img src={product.image} alt={product.name} />
+                      </a>
+                    ))}
+                  </div>
+                )}
+
+                <AnimatePresence mode="wait">
+                  <motion.a
+                    key={currentProduct.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="current-product-details"
+                    target="_blank"
+                    href={currentProduct.url}
+                  >
+                    <img src={currentProduct.image} />
+                    <div className="details">
+                      <span className="product-name">
+                        {currentProduct.name}
+                      </span>
+                      <span className="product-price">
+                        ${currentProduct.price} {currentProduct.currency}
+                      </span>
+                    </div>
+                  </motion.a>
+                </AnimatePresence>
               </div>
-              <div className="backdrop" />
+              {/* <div className="backdrop" /> */}
             </motion.div>
           </motion.div>,
           shadowRoot
@@ -146,26 +179,23 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
 
 class CachaiStoriesWC extends HTMLElement {
   fetchData = async () => {
-    // const url = window.location.href;
+    const url = window.location.href;
 
     const response = await fetch(
-      `http://localhost:5000/stories-by-url?url=https://www.google.com`
+      `http://localhost:5000/stories-by-url?url=${encodeURIComponent(url)}`
     );
     const videos = await response.json();
 
-    console.log({ videos });
     if (!videos.length) return null;
     const shadowRoot = this.shadowRoot!;
     const mountPoint = shadowRoot.querySelector("#cachai-wc");
     if (mountPoint) {
       const root = createRoot(mountPoint);
-      console.log("renderizando modal");
       root.render(<CarouselModal shadowRoot={shadowRoot} videos={videos} />);
     }
   };
 
   connectedCallback() {
-    console.log("CONECTANDO");
     const shadowRoot = this.attachShadow({ mode: "open" });
     const mountPoint = document.createElement("div");
     mountPoint.id = "cachai-wc";
