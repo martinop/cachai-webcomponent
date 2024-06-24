@@ -1,1 +1,1 @@
-# Cachai Web Component
+# trendfit Web Component

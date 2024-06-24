@@ -23,8 +23,11 @@ s3.upload(
     ContentType: "application/javascript",
     ContentEncoding: "gzip", // Indicate that the content is gzip-compressed
   },
-  (err, data) =>
+  (err) =>
     err
       ? console.log("Error uploading index.js ", err)
-      : console.log("index.js uploaded =>", data.Location)
+      : console.log(
+          "index.js uploaded =>",
+          "https://d1d9paldagfo65.cloudfront.net/scripts/index.js.gz"
+        )
 );

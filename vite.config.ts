@@ -8,7 +8,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "src/main.tsx"),
-      name: "CachaiWC",
+      name: "trendfitWC",
       fileName: () => `index.js`,
       formats: ["iife"],
     },

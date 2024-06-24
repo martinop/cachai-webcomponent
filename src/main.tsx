@@ -145,7 +145,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   </div>
                 )}
 
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="wait" initial={false}>
                   <motion.a
                     key={currentProduct.id}
                     initial={{ opacity: 0 }}
@@ -177,18 +177,20 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
   );
 }
 
-class CachaiStoriesWC extends HTMLElement {
+class trendfitStoriesWC extends HTMLElement {
   fetchData = async () => {
     const url = window.location.href;
 
     const response = await fetch(
-      `http://localhost:5000/stories-by-url?url=${encodeURIComponent(url)}`
+      `https://backend.trendfit.app/stories-by-url?url=${encodeURIComponent(
+        url
+      )}`
     );
     const videos = await response.json();
 
     if (!videos.length) return null;
     const shadowRoot = this.shadowRoot!;
-    const mountPoint = shadowRoot.querySelector("#cachai-wc");
+    const mountPoint = shadowRoot.querySelector("#trendfit-wc");
     if (mountPoint) {
       const root = createRoot(mountPoint);
       root.render(<CarouselModal shadowRoot={shadowRoot} videos={videos} />);
@@ -198,7 +200,7 @@ class CachaiStoriesWC extends HTMLElement {
   connectedCallback() {
     const shadowRoot = this.attachShadow({ mode: "open" });
     const mountPoint = document.createElement("div");
-    mountPoint.id = "cachai-wc";
+    mountPoint.id = "trendfit-wc";
     shadowRoot.appendChild(mountPoint);
 
     const style = document.createElement("style");
@@ -222,6 +224,6 @@ class CachaiStoriesWC extends HTMLElement {
   }
 }
 
-customElements.define("cachai-stories-wc", CachaiStoriesWC);
+customElements.define("trendfit-stories-wc", trendfitStoriesWC);
 
-document.body.appendChild(document.createElement("cachai-stories-wc"));
+document.body.appendChild(document.createElement("trendfit-stories-wc"));

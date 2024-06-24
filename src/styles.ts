@@ -3,7 +3,7 @@ export default `
 
 .open-stories-button {
   position: fixed;
-  bottom: 30px;
+  bottom: 160px;
   left: 30px;
   padding: 10px 20px;
   cursor: pointer;
@@ -13,6 +13,7 @@ export default `
   background: black;
   border-radius: 100%;
   border: solid 4px black;
+  z-index: 9999;
 }
 
 .open-stories-button video {
