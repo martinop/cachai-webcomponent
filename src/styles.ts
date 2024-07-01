@@ -205,4 +205,20 @@ video {
 .progress.filled {
   width: 100% !important;
 }
+
+.prev-next-container {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+}
+.prev-next-container > button {
+  width: 50%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
 `;

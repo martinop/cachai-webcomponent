@@ -68,6 +68,24 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
       });
   };
 
+  const prevVideo = () => {
+    progressSpring.jump(0);
+
+    setCurrentVideoIndex((prevIndex) => {
+      const newIndex = Math.max(prevIndex - 1, 0);
+      if (prevIndex !== 0 && videos[newIndex].id) {
+        trackEvent({
+          action: "trendfit_video_change",
+          category: "Trendfit Videos",
+          label: `Video ID: ${videos[prevIndex].id} changed to Video ID: ${videos[newIndex].id}`,
+        });
+      }
+      return newIndex;
+    });
+
+    setCurrentProductIndex(0);
+  };
+
   const currentVideo = videos[currentVideoIndex];
   const currentProduct = currentVideo.products[currentProductIndex];
 
@@ -129,6 +147,12 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
     nextVideo();
   };
 
+  useEffect(() => {
+    progressSpring.jump(0);
+  }, [currentVideoIndex, progressSpring]);
+
+  console.log({ currentVideoIndex });
+
   return (
     <>
       {!isOpen && (
@@ -178,7 +202,11 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                       initial={{ width: 0 }}
                       style={{
                         width:
-                          index === currentVideoIndex ? progressWidth : "100%",
+                          index === currentVideoIndex
+                            ? progressWidth
+                            : index < currentVideoIndex
+                            ? "100%"
+                            : "0%",
                       }}
                     />
                   </div>
@@ -250,7 +278,12 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                     </div>
                   </motion.a>
                 </AnimatePresence>
+                <div className="prev-next-container">
+                  <button onClick={prevVideo} />
+                  <button onClick={nextVideo} />
+                </div>
               </div>
+
               {/* <div className="backdrop" /> */}
             </motion.div>
           </motion.div>,
