@@ -30,6 +30,9 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
 
   const trackEvent = ({ action, category, label, value }: TrackEvent) => {
     if (typeof window.gtag !== "undefined") {
+      console.log(
+        `Tracking event: ${action} | ${category} | ${label} | ${value}`
+      );
       window.gtag("event", action, {
         event_category: category,
         event_label: label,
