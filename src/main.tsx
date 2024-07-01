@@ -151,8 +151,6 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
     progressSpring.jump(0);
   }, [currentVideoIndex, progressSpring]);
 
-  console.log({ currentVideoIndex });
-
   return (
     <>
       {!isOpen && (
