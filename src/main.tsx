@@ -13,6 +13,13 @@ import { createRoot } from "react-dom/client";
 import styles from "./styles";
 import { CarouselModalProps } from "./type";
 
+type TrackEvent = {
+  action: string;
+  category: string;
+  label: string;
+  value?: string | number;
+};
+
 function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
@@ -21,6 +28,17 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
   const progressSpring = useSpring(0);
   const progressWidth = useTransform(progressSpring, (value) => `${value}%`);
 
+  const trackEvent = ({ action, category, label, value }: TrackEvent) => {
+    if (typeof window.gtag !== "undefined") {
+      window.gtag("event", action, {
+        event_category: category,
+        event_label: label,
+        value: value,
+      });
+    } else {
+      console.warn("gtag is not defined");
+    }
+  };
   const handleTimeUpdate = () => {
     if (videoRef.current) {
       const currentTime = videoRef.current.currentTime;
@@ -36,6 +54,13 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
       Math.min(prevIndex + 1, videos.length - 1)
     );
     setCurrentProductIndex(0);
+    trackEvent({
+      action: "trendfit_video_change",
+      category: "Trendfit Videos",
+      label: `Video ID: ${videos[currentVideoIndex].id} changed to Video ID: ${
+        videos[currentVideoIndex + 1].id
+      }`,
+    });
   };
 
   const currentVideo = videos[currentVideoIndex];
@@ -56,13 +81,47 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
     if (videoRef.current) {
       videoRef.current.src = videos[currentVideoIndex].src;
       videoRef.current.currentTime = 0;
+      trackEvent({
+        action: "trendfit_video_view",
+        category: "Trendfit Videos",
+        label: `Video ID: ${currentVideo.id} viewed`,
+        value: currentVideo.id,
+      });
     }
-  }, [currentVideoIndex]);
+  }, [currentVideo.id, currentVideoIndex, videos]);
+
+  const handleOpen = () => {
+    setIsOpen(true);
+    trackEvent({
+      action: "trendfit_modal_open",
+      category: "Trendfit Modal",
+      label: "Story Modal Opened",
+    });
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    trackEvent({
+      action: "trendfit_modal_close",
+      category: "Trendfit Modal",
+      label: "Story Modal Closed",
+    });
+  };
+
+  const handleVideoEnd = () => {
+    trackEvent({
+      action: "trendfit_video_complete",
+      category: "Trendfit Videos",
+      label: `Video ID: ${currentVideo.id} completed`,
+      value: currentVideo.id,
+    });
+    nextVideo();
+  };
 
   return (
     <>
       {!isOpen && (
-        <button className="open-stories-button" onClick={() => setIsOpen(true)}>
+        <button className="open-stories-button" onClick={handleOpen}>
           <video
             src={videos?.[0]?.src}
             poster={videos?.[0]?.poster}
@@ -88,10 +147,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
               exit={{ scale: 0.8 }}
               className="modal-content"
             >
-              <button
-                className="close-modal-button"
-                onClick={() => setIsOpen(false)}
-              >
+              <button className="close-modal-button" onClick={handleClose}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
@@ -123,7 +179,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   ref={videoRef}
                   autoPlay
                   playsInline
-                  onEnded={nextVideo}
+                  onEnded={handleVideoEnd}
                   poster={currentVideo.poster}
                   onTimeUpdate={handleTimeUpdate}
                 />
@@ -138,6 +194,14 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                           "product",
                           index === currentProductIndex && "active"
                         )}
+                        onClick={() => {
+                          trackEvent({
+                            action: "trendfit_product_click",
+                            category: "Trendfit Products",
+                            label: `Product ID: ${product.id} clicked`,
+                            value: product.id,
+                          });
+                        }}
                       >
                         <img src={product.image} alt={product.name} />
                       </a>
@@ -155,6 +219,14 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                     className="current-product-details"
                     target="_blank"
                     href={currentProduct.url}
+                    onClick={() => {
+                      trackEvent({
+                        action: "trendfit_product_click",
+                        category: "Trendfit Products",
+                        label: `Product ID: ${currentProduct.id} clicked`,
+                        value: currentProduct.id,
+                      });
+                    }}
                   >
                     <img src={currentProduct.image} />
                     <div className="details">
