@@ -57,13 +57,15 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
       Math.min(prevIndex + 1, videos.length - 1)
     );
     setCurrentProductIndex(0);
-    trackEvent({
-      action: "trendfit_video_change",
-      category: "Trendfit Videos",
-      label: `Video ID: ${videos[currentVideoIndex].id} changed to Video ID: ${
-        videos[currentVideoIndex + 1].id
-      }`,
-    });
+
+    if (videos[currentVideoIndex + 1].id)
+      trackEvent({
+        action: "trendfit_video_change",
+        category: "Trendfit Videos",
+        label: `Video ID: ${
+          videos[currentVideoIndex].id
+        } changed to Video ID: ${videos[currentVideoIndex + 1].id}`,
+      });
   };
 
   const currentVideo = videos[currentVideoIndex];
@@ -99,6 +101,12 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
       action: "trendfit_modal_open",
       category: "Trendfit Modal",
       label: "Story Modal Opened",
+    });
+    trackEvent({
+      action: "trendfit_video_view",
+      category: "Trendfit Videos",
+      label: `Video ID: ${currentVideo.id} viewed`,
+      value: currentVideo.id,
     });
   };
 
@@ -266,6 +274,8 @@ class trendfitStoriesWC extends HTMLElement {
     if (!videos.length) return null;
     const shadowRoot = this.shadowRoot!;
     const mountPoint = shadowRoot.querySelector("#trendfit-wc");
+
+    console.log({ videos });
     if (mountPoint) {
       const root = createRoot(mountPoint);
       root.render(<CarouselModal shadowRoot={shadowRoot} videos={videos} />);
