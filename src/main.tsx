@@ -161,6 +161,8 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
       action: "trendfit_modal_open",
       category: "Trendfit Modal",
       label: "Story Modal Opened",
+      videoId: videos?.[0].id,
+      productId: null,
     });
     trackEvent({
       action: "trendfit_video_view",
@@ -178,6 +180,8 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
       action: "trendfit_modal_close",
       category: "Trendfit Modal",
       label: "Story Modal Closed",
+      videoId: currentVideo.id, // TO DO: Que hacemos si el video es el ultimo y el usuario cerro el modal precisamente porque era el ultimo video?
+      productId: null,
     });
   };
 
