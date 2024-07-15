@@ -276,6 +276,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                       <a
                         key={product.id}
                         href={product.url}
+                        target="_blank"
                         className={cx(
                           "product",
                           index === currentProductIndex && "active"
@@ -306,6 +307,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                     transition={{ duration: 0.5 }}
                     className="current-product-details"
                     href={currentProduct.url}
+                    target="_blank"
                     onClick={() => {
                       trackEvent({
                         action: "trendfit_product_click",
