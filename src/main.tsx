@@ -1,12 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useState, useEffect, useRef } from "react";
 import cx from "classnames";
-import {
-  AnimatePresence,
-  motion,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, useSpring, useTransform } from "framer-motion";
 import { v4 as uuidv4 } from "uuid";
 import { createPortal } from "react-dom";
 import { createRoot } from "react-dom/client";
@@ -318,38 +313,34 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   </div>
                 )}
 
-                <AnimatePresence mode="wait" initial={false}>
-                  <motion.a
-                    key={currentProduct.id}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="current-product-details"
-                    href={currentProduct.url}
-                    target="_blank"
-                    onClick={() => {
-                      trackEvent({
-                        action: "trendfit_product_click",
-                        category: "Trendfit Products",
-                        label: `Product ID: ${currentProduct.id} clicked`,
-                        value: currentProduct.id,
-                        productId: currentProduct.id,
-                        videoId: currentVideo.id,
-                      });
-                    }}
-                  >
-                    <img src={currentProduct.image} />
-                    <div className="details">
-                      <span className="product-name">
-                        {currentProduct.name}
-                      </span>
-                      <span className="product-price">
-                        ${currentProduct.price} {currentProduct.currency}
-                      </span>
-                    </div>
-                  </motion.a>
-                </AnimatePresence>
+                <motion.a
+                  key={currentProduct.id}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="current-product-details"
+                  href={currentProduct.url}
+                  target="_blank"
+                  onClick={() => {
+                    trackEvent({
+                      action: "trendfit_product_click",
+                      category: "Trendfit Products",
+                      label: `Product ID: ${currentProduct.id} clicked`,
+                      value: currentProduct.id,
+                      productId: currentProduct.id,
+                      videoId: currentVideo.id,
+                    });
+                  }}
+                >
+                  <img src={currentProduct.image} />
+                  <div className="details">
+                    <span className="product-name">{currentProduct.name}</span>
+                    <span className="product-price">
+                      ${currentProduct.price} {currentProduct.currency}
+                    </span>
+                  </div>
+                </motion.a>
                 <div className="prev-next-container">
                   <button onClick={prevVideo} tabIndex={undefined} />
                   <button onClick={nextVideo} tabIndex={undefined} />
