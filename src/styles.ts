@@ -90,7 +90,6 @@ video {
   bottom: 100px;
   left: 20px;
   display: flex;
-  flex-direction: column;
   gap: 0.5rem;
   z-index: 3;
 }
@@ -107,8 +106,8 @@ video {
 }
 
 .product img {
-  width: 56px;
-  height: 56px;
+  width: 40px;
+  height: 40px;
   object-fit: cover;
   object-position: center;
   border-radius: 4px;

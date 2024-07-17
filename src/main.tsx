@@ -92,6 +92,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
     setCurrentVideoIndex((prevIndex) =>
       Math.min(prevIndex + 1, videos.length - 1)
     );
+    progressSpring.jump(0);
     setCurrentProductIndex(0);
 
     if (videos[currentVideoIndex + 1].id)
@@ -242,7 +243,26 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
               </button>
               <div className="progress-bars">
                 {videos.map((_, index) => (
-                  <div key={index} className="progress-bar">
+                  <div key={`progress-bar-${index}`} className="progress-bar">
+                    {currentVideoIndex !== index ? (
+                      <div
+                        className="progress"
+                        style={{
+                          width: currentVideoIndex > index ? "100%" : "0%",
+                        }}
+                      />
+                    ) : (
+                      <motion.div
+                        className="progress"
+                        initial={{
+                          width: 0,
+                        }}
+                        style={{
+                          width: progressWidth,
+                        }}
+                      />
+                    )}
+
                     <motion.div
                       className={cx("progress", {
                         filled: index < currentVideoIndex,
@@ -274,7 +294,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   <div className="products-container">
                     {currentVideo.products.map((product, index) => (
                       <a
-                        key={product.id}
+                        key={`products-list-${product.id}`}
                         href={product.url}
                         target="_blank"
                         className={cx(
