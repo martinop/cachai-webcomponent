@@ -27,6 +27,7 @@ const getUserId = () => {
 };
 
 function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
+  console.log({ videos });
   const [isOpen, setIsOpen] = useState(false);
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [currentProductIndex, setCurrentProductIndex] = useState(0);
@@ -70,7 +71,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
         value: value,
       });
     } else {
-      console.warn("gtag is not defined");
+      // console.warn("gtag is not defined");
     }
   };
   const handleTimeUpdate = () => {
@@ -257,21 +258,6 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                         }}
                       />
                     )}
-
-                    <motion.div
-                      className={cx("progress", {
-                        filled: index < currentVideoIndex,
-                      })}
-                      initial={{ width: 0 }}
-                      style={{
-                        width:
-                          index === currentVideoIndex
-                            ? progressWidth
-                            : index < currentVideoIndex
-                            ? "100%"
-                            : "0%",
-                      }}
-                    />
                   </div>
                 ))}
               </div>
@@ -359,7 +345,6 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
 class trendfitStoriesWC extends HTMLElement {
   fetchData = async () => {
     const url = window.location.href;
-
     const response = await fetch(
       `https://backend.trendfit.app/stories-by-url?url=${encodeURIComponent(
         url
@@ -371,7 +356,6 @@ class trendfitStoriesWC extends HTMLElement {
     const shadowRoot = this.shadowRoot!;
     const mountPoint = shadowRoot.querySelector("#trendfit-wc");
 
-    console.log({ videos });
     if (mountPoint) {
       const root = createRoot(mountPoint);
       root.render(<CarouselModal shadowRoot={shadowRoot} videos={videos} />);
