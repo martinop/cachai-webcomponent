@@ -3,7 +3,7 @@ export default `
 
 .open-stories-button {
   position: fixed;
-  bottom: 160px;
+  bottom: 80px;
   left: 30px;
   padding: 10px 20px;
   cursor: pointer;
