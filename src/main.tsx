@@ -210,6 +210,38 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
             loop
             playsInline
           />
+          {/* <div className="text-container">
+            <div className="text-circle">
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlnsXlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="100px"
+                height="100px"
+                viewBox="0 0 100 100"
+                enableBackground="new 0 0 100 100"
+                xmlSpace="preserve"
+              >
+                <defs>
+                  <path
+                    id="circlePath"
+                    d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0 "
+                  />
+                </defs>
+                <circle cx="50" cy="50" r="40" fill="none" />
+                <g>
+                  <use xlinkHref="#circlePath" fill="none" />
+                  <text fill="black">
+                    <textPath xlinkHref="#circlePath">
+                      DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO
+                    </textPath>
+                  </text>
+                </g>
+              </svg>
+            </div>
+          </div> */}
         </button>
       )}
 
