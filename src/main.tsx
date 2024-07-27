@@ -235,7 +235,7 @@ function CarouselModal({ shadowRoot, videos }: CarouselModalProps) {
                   <use xlinkHref="#circlePath" fill="none" />
                   <text fill="black">
                     <textPath xlinkHref="#circlePath">
-                      DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;DEMO
+                      DEMO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DEMO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </textPath>
                   </text>
                 </g>

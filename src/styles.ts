@@ -27,10 +27,10 @@ export default `
 
 .text-container {
   position: absolute;
-  width: 140px;
-  height: 140px;
-  top: -24px;
-  left: -24px;
+  width: 136px;
+  height: 136px;
+  top: -22px;
+  left: -22px;
 }
 
 .text-circle {
@@ -42,7 +42,7 @@ export default `
 
 .text-circle text {
   font-family: 'Roboto', sans-serif;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 500;
 }
 
